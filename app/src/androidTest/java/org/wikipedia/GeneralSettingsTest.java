@@ -37,56 +37,30 @@ public class GeneralSettingsTest {
 
     @Test
     public void generalSettingsTest() {
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.menu_overflow_button), withContentDescription("More options"), isDisplayed()));
-        actionMenuItemView.perform(click());
+        generalSettingsShowImage();
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.explore_overflow_settings), withText("Settings"), isDisplayed()));
-        appCompatTextView.perform(click());
+        generalSettingsShowImage();
 
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.list),
-                        withParent(withId(android.R.id.list_container)),
-                        isDisplayed()));
-        recyclerView.perform(actionOnItemAtPosition(2, click()));
+        MyUtil.clearHistory();
 
-        pressBack();
-
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.view_list_card_list), isDisplayed()));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction recyclerView3 = onView(
-                allOf(withId(R.id.view_news_fullscreen_link_card_list), isDisplayed()));
-        recyclerView3.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction imageButton = onView(
-                allOf(withContentDescription("Navigate up"),
-                        withParent(withId(R.id.page_toolbar)),
-                        isDisplayed()));
-        imageButton.perform(click());
-
-        ViewInteraction imageButton2 = onView(
-                allOf(withContentDescription("Navigate up"),
-                        withParent(withId(R.id.view_news_fullscreen_toolbar)),
-                        isDisplayed()));
-        imageButton2.perform(click());
-
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
         ViewInteraction actionMenuItemView2 = onView(
                 allOf(withId(R.id.menu_overflow_button), withContentDescription("More options"), isDisplayed()));
         actionMenuItemView2.perform(click());
 
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
         ViewInteraction appCompatTextView2 = onView(
                 allOf(withId(R.id.explore_overflow_settings), withText("Settings"), isDisplayed()));
         appCompatTextView2.perform(click());
 
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
         ViewInteraction recyclerView4 = onView(
                 allOf(withId(R.id.list),
                         withParent(withId(android.R.id.list_container)),
                         isDisplayed()));
         recyclerView4.perform(actionOnItemAtPosition(11, click()));
 
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
         ViewInteraction textView = onView(
                 allOf(withText("About"),
                         isDisplayed()));
@@ -96,6 +70,50 @@ public class GeneralSettingsTest {
         pressBack();
     }
 
+    private static void generalSettingsShowImage() {
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.menu_overflow_button), withContentDescription("More options"), isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        ViewInteraction appCompatTextView = onView(
+                allOf(withId(R.id.explore_overflow_settings), withText("Settings"), isDisplayed()));
+        appCompatTextView.perform(click());
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.list),
+                        withParent(withId(android.R.id.list_container)),
+                        isDisplayed()));
+        recyclerView.perform(actionOnItemAtPosition(2, click()));
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        pressBack();
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.view_list_card_list), isDisplayed()));
+        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction recyclerView3 = onView(
+                allOf(withId(R.id.view_news_fullscreen_link_card_list), isDisplayed()));
+        recyclerView3.perform(actionOnItemAtPosition(0, click()));
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction imageButton = onView(
+                allOf(withContentDescription("Navigate up"),
+                        withParent(withId(R.id.page_toolbar)),
+                        isDisplayed()));
+        imageButton.perform(click());
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction imageButton2 = onView(
+                allOf(withContentDescription("Navigate up"),
+                        withParent(withId(R.id.view_news_fullscreen_toolbar)),
+                        isDisplayed()));
+        imageButton2.perform(click());
+    }
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 

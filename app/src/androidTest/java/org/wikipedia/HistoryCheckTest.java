@@ -12,82 +12,79 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.is;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class JumpingBetweenDifferentSectionsTest {
+public class HistoryCheckTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void jumpingBetweenDifferentSections() {
+    public void historyCheckTest() {
+        ViewInteraction appCompatTextView = onView(
+                allOf(withText("History"), isDisplayed()));
+        appCompatTextView.perform(click());
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction imageView = onView(
+                allOf(withId(R.id.history_empty_image),
+                        isDisplayed()));
+        imageView.check(matches(isDisplayed()));
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+
+        ViewInteraction appCompatTextView2 = onView(
+                allOf(withText("Explore"), isDisplayed()));
+        appCompatTextView2.perform(click());
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.view_list_card_list), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
 
         ViewInteraction recyclerView2 = onView(
                 allOf(withId(R.id.view_news_fullscreen_link_card_list), isDisplayed()));
         recyclerView2.perform(actionOnItemAtPosition(0, click()));
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withText("b#5"), isDisplayed()));
-        appCompatTextView.perform(click());
-
-        ViewInteraction linearLayout = onView(
-                allOf(childAtPosition(
-                        withId(R.id.page_toc_list),
-                        1),
+        ViewInteraction imageButton = onView(
+                allOf(withContentDescription("Navigate up"),
+                        withParent(withId(R.id.page_toolbar)),
                         isDisplayed()));
-        linearLayout.perform(click());
+        imageButton.perform(click());
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
 
-        ViewInteraction appCompatTextView2 = onView(
-                allOf(withText("b#5"), isDisplayed()));
-        appCompatTextView2.perform(click());
-
-        ViewInteraction linearLayout2 = onView(
-                allOf(childAtPosition(
-                        withId(R.id.page_toc_list),
-                        3),
+        ViewInteraction imageButton2 = onView(
+                allOf(withContentDescription("Navigate up"),
+                        withParent(withId(R.id.view_news_fullscreen_toolbar)),
                         isDisplayed()));
-        linearLayout2.perform(click());
+        imageButton2.perform(click());
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
 
-        ViewInteraction appCompatTextView3 = onView(
-                allOf(withText("b#5"), isDisplayed()));
-        appCompatTextView3.perform(click());
 
-        ViewInteraction linearLayout3 = onView(
-                allOf(childAtPosition(
-                        withId(R.id.page_toc_list),
-                        6),
-                        isDisplayed()));
-        linearLayout3.perform(click());
-
-        ViewInteraction webView = onView(
-                allOf(withId(R.id.page_web_view),
-                        childAtPosition(
-                                allOf(withId(R.id.page_contents_container),
-                                        childAtPosition(
-                                                withId(R.id.page_refresh_container),
-                                                0)),
-                                0),
-                        isDisplayed()));
-        webView.check(matches(isDisplayed()));
-
-        pressBack();
+        MyUtil.clearHistory();
     }
 
     private static Matcher<View> childAtPosition(

@@ -43,19 +43,13 @@ public class FindInPageTest {
 
         searchForString("Hello");
 
-        MyUtil.pressBackButton(4);
-
-    }
-
-    @Test
-    public void findTheInPageTest() {
-        goToAnyArticle();
+        MyUtil.pressBackButton(2);
 
         searchForString("The");
-
         MyUtil.pressBackButton(4);
-
+        MyUtil.clearHistory();
     }
+
 
     private static void goToAnyArticle() {
         ViewInteraction recyclerView = onView(

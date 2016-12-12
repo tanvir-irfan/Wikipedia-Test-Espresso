@@ -72,6 +72,8 @@ public class ThemeChangeTest {
 
         pressBack();
 
+        MyUtil.clearHistory();
+
     }
 
 }

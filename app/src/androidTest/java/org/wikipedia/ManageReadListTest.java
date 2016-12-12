@@ -47,7 +47,7 @@ public class ManageReadListTest {
 
     private static String READING_LIST_NAME = "Reading List";
     private static String READING_LIST_NAME_NEW = "Reading List Edited";
-    private static int SLEEP_DURATION = 2;
+    private static int SLEEP_DURATION = MyUtil.SLEEP_DURATION;
 
     @Test
     public void addDeleteReadListTest() {
@@ -56,6 +56,7 @@ public class ManageReadListTest {
         checkArticle(READING_LIST_NAME, "1 article", false);
         //now it is time to delete the list.
         cleanUp(READING_LIST_NAME);
+        MyUtil.clearHistory();
     }
 
     @Test
@@ -68,6 +69,7 @@ public class ManageReadListTest {
 
         //now it is time to delete the list.
         cleanUp(READING_LIST_NAME);
+        MyUtil.clearHistory();
     }
 
     @Test
@@ -113,6 +115,7 @@ public class ManageReadListTest {
         checkArticle(READING_LIST_NAME_NEW, null, true);
         //now it is time to delete the list.
         cleanUp(READING_LIST_NAME_NEW);
+        MyUtil.clearHistory();
     }
 
     private void cleanUp(String listName) {
@@ -120,6 +123,15 @@ public class ManageReadListTest {
         goToList(listName);
         openEditOption();
         deleteReadListItem();
+
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        SleepUtil.sleep(MyUtil.SLEEP_DURATION);
+        ViewInteraction appCompatTextView4 = onView(
+                allOf(withText("Explore"), isDisplayed()));
+        appCompatTextView4.perform(click());
+
+        SleepUtil.sleep(SLEEP_DURATION);
     }
 
     /**
