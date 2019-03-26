@@ -1,2 +1,2 @@
-#	Automated Android UI Testing with Espresso [github, youTube]:
+#Automated Android UI Testing with Espresso [github, youTube]:
 -	UI Testing for an Android app i.e. Wikipedia, using automated framework – Espresso.
